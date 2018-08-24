@@ -15,7 +15,7 @@
 - About
 - Support
 - Installation
-- Logical Name
+- Logical Name Solution
 - Troubleshooting
 
 
@@ -109,7 +109,7 @@ Bug/Enhancement Tracking: GitHub @ https://github.com/splSM/spl2smIntegration/is
 
 
 
-$L.Installation:
+# $L.Installation:
 
 - This app should be installed on Search Head nodes.
 - Drop this into bad boy into $SPLUNK_HOME/etc/apps or download from it from the GUI, etc.
@@ -140,7 +140,7 @@ $L.Installation:
 
 
 
-$L.LogicalNameSolution:
+# $L.LogicalNameSolution:
 
 Nowadays, Service Manager uses what was called (when the feature first was released) the Logical
 Name Solution. In a nutshell, this allows for multiple Configuration Items (CIs; device table
@@ -170,7 +170,7 @@ Also, there is already a DisplayName ScriptLibrary which the SM administrators c
 
 
 
-$L.Troubleshooting:
+# $L.Troubleshooting:
 
 *** I will add to this section as I indentify common issues you may face in the Service Manager
     REST API and/or things you may encounter when getting the Splunk side of this app working.
