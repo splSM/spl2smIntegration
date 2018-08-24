@@ -151,17 +151,16 @@ going to want those in logical.name format (for example: CI123456) and not in a 
 different CI in your integration, it would behoove the SM administrators to add something like these
 lines to the expressions on the probsummary extaccess record:
 
-   if (affected.item in $L.file)~#"CI" then (affected.item in $L.file=jscall("SplunkIntegration.getLogicalNameByDisplayName", affected.item in $L.file))
-   if (logical.name in $L.file)~#"CI" then (logical.name in $L.file=jscall("SplunkIntegration.getLogicalNameByDisplayName", logical.name in $L.file)) 
+if (affected.item in $L.file)~#"CI" then (affected.item in $L.file=jscall("SplunkIntegration.getLogicalNameByDisplayName", affected.item in $L.file));if (logical.name in $L.file)~#"CI" then (logical.name in $L.file=jscall("SplunkIntegration.getLogicalNameByDisplayName", logical.name in $L.file)) 
 
 The SM administrators could then create a ScriptLibrary named SplunkIntegration with this function:
 
-   function getLogicalNameByDisplayName(displayName) {
-      if ( displayName == null ) { return 'Display Name not provided!'; }
-      var device = new SCFile('device');
-      if ( device.doSelect('display.name="' + displayName + '"') == RC_SUCCESS ) { return device.logical_name; }
-      else { return 'Logical Name not found by Display Name provided!'; }
-   }
+function getLogicalNameByDisplayName(displayName) {
+   if ( displayName == null ) { return 'Display Name not provided!'; }
+   var device = new SCFile('device');
+   if ( device.doSelect('display.name="' + displayName + '"') == RC_SUCCESS ) { return device.logical_name; }
+   else { return 'Logical Name not found by Display Name provided!'; }
+}
 
 Also, there is already a DisplayName ScriptLibrary which the SM administrators could use instead.
 
