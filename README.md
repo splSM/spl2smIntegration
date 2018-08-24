@@ -43,6 +43,11 @@ Author:                   Aaron Chandler (splSM on GitHub)
 
 Version:                  1.0.2
 
+What, Why, How, etc.:     This app allows a Splunk administrator to create saved searches and alerts, and
+                          when triggered create an Incident record in Service Manager, which is a robust
+                          enterprise-grade ticketing solution often used for (among other things), IT Service
+                          Management and cybersecurity Incident Resolution.
+
 Compatible Products:      Intended for use with Splunk Enterprise, Cloud, or Light. To this point, I have
                           only worked with on-prem Splunk, but Cloud and Light should both run this app
                           as well. Intended to be used in concert with HP/HPE/MicroFocus Service Manager.
@@ -62,11 +67,6 @@ Performance:              No benchmark tests have been performed on this app, as
                           which fires an alert, the alert being fired, the communication between Splunk and SM
                           occuring across the wire (not an internal LAN), a ticket being generated, and the JSON
                           response from SM being logged - all this has taken less than 2 seconds in my testing.
-
-What, Why, How, etc.:     This app allows a Splunk administrator to create saved searches and alerts, and
-                          when triggered create an Incident record in Service Manager, which is a robust
-                          enterprise-grade ticketing solution often used for (among other things), IT Service
-                          Management and cybersecurity Incident Resolution.
 
 Scripts and/or Binaries:  createIncident.py is the primary worker bee of this app, which takes details
                           provided in the app setup and in the saved-search-specific alert, and then creates
