@@ -43,8 +43,8 @@ Author:                   Aaron Chandler (splSM on GitHub)
 
 Version:                  1.0.2
 
-What, Why, How, etc.:     This app allows a Splunk administrator to create saved searches and alerts, and
-                          when triggered create an Incident record in Service Manager, which is a robust
+What, Why, How, etc.:     This app allows a Splunk administrator to create saved searches and alerts, which
+                          when triggered will create an Incident record in Service Manager, which is a robust
                           enterprise-grade ticketing solution often used for (among other things), IT Service
                           Management and cybersecurity Incident Resolution.
 
