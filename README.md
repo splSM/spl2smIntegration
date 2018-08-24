@@ -147,8 +147,9 @@ records) with the same *name* to exist, while still giving every CI a unique ID.
 what you send in for the Affected Service and Affected CI fields, because an Out-of-Box SM is
 going to want those in logical.name format (for example: CI123456) and not in a display.name format
 (for example: hostname.domain.com). Rather than you having to ask every time you want to use a
-different CI in your integration, it would behoove the SM administrators to add something like these
-lines to the expressions on the probsummary extaccess record:
+different Business Service in your integration (and, moreso, considering that the app will
+automatically send in the hostname found in the raw event!), it would behoove the SM administrators
+to add something like these lines to the expressions on the probsummary extaccess record:
 
 if (affected.item in $L.file)~#"CI" then (affected.item in $L.file=jscall("SplunkIntegration.getLogicalNameByDisplayName", affected.item in $L.file));if (logical.name in $L.file)~#"CI" then (logical.name in $L.file=jscall("SplunkIntegration.getLogicalNameByDisplayName", logical.name in $L.file)) 
 
