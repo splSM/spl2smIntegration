@@ -25,6 +25,11 @@
 
 # $L.ToDo:
 
+- Build a GUI functionality to select whether the communication with SM should occur over HTTP or HTTPS,
+  and develop the backend side to handle the latter
+  - This release uses HTTP, on the assumption that your SM instance is on an internal LAN and the API
+    servlet is therefore not requiring SSL, because SM would need to have a cert for every machine that
+    wants to use the API over SSL.
 - Build a functionality to allow administrators to re-label the fields in the alert action UI, based on
   how they are labeled in the Service Manager Incident screens
 - Build a toggle to allow administrators to say "all Incidents take the same field values" or "per-alert
@@ -42,33 +47,33 @@ Author:                   Aaron Chandler (splSM on GitHub)
 
 Version:                  1.0.2
 
-What, Why, How, etc.:     This app allows a Splunk administrator to create saved searches and alerts, which
+What, Why, How, etc.:     This add-on allows a Splunk administrator to create saved searches and alerts, which
                           when triggered will create an Incident record in Service Manager, which is a robust
                           enterprise-grade ticketing solution often used for (among other things), IT Service
                           Management and cybersecurity Incident Resolution.
 
 Compatible Products:      Intended for use with Splunk Enterprise, Cloud, or Light. To this point, I have
-                          only worked with on-prem Splunk, but Cloud and Light should both run this app
+                          only worked with on-prem Splunk, but Cloud and Light should both run this add-on
                           as well. Intended to be used in concert with HP/HPE/MicroFocus Service Manager.
 
-Supported Platforms:      This app is platform-independent.
+Supported Platforms:      This add-on is platform-independent.
 
-Index-Time Operations:    None. No indexing occurs in this app. It involves outbound data from Splunk to SM.
+Index-Time Operations:    None. No indexing occurs in this add-on. It involves outbound data from Splunk to SM.
 
 Creates Indexes:          No.
 
 Implements Summarization: Nope.
 
-Assorted:                 This app involves no lookups, and this app is not related to or involved with Splunk CIM.
+Assorted:                 This add-on involves no lookups, and this is not related to or involved with Splunk CIM.
 
-Performance:              No benchmark tests have been performed on this app, as they are not particularly
-                          needed for an app of this kind. However, for what it's worth: generating an event
+Performance:              No benchmark tests have been performed on this add-on, as they are not particularly
+                          needed for an add-on of this kind. However, for what it's worth: generating an event
                           which fires an alert, the alert being fired, the communication between Splunk and SM
                           occuring across the wire (not an internal LAN), a ticket being generated, and the JSON
                           response from SM being logged - all this has taken less than 2 seconds in my testing.
 
-Scripts and/or Binaries:  createIncident.py is the primary worker bee of this app, which takes details
-                          provided in the app setup and in the saved-search-specific alert, and then creates
+Scripts and/or Binaries:  createIncident.py is the primary worker bee of this add-on, which takes details
+                          provided in the add-on setup and in the saved-search-specific alert, and then creates
                           Incident records in Service Manager.
 
 v1.0.2 Release Notes:     - Ability to establish global SM connection, credentials, and API field captions.
@@ -87,7 +92,7 @@ v1.0.2 Release Notes:     - Ability to establish global SM connection, credentia
 
 # $L.Support:
 
-Support Boilerplate:      This app is offered as-is, with no guaranteed support mechanism. By downloading + installing,
+Support Boilerplate:      This add-on is offered as-is, with no guaranteed support mechanism. By downloading + installing,
                           you are indemnifying me (Aaron Chandler) of any responsibility for how it may impact your
                           system(s). Now that THAT is out of the way, if you have any installation hurdles or questions
                           or concerns or ideas (or catastrophes in your Prod environment), email me and I will do my
@@ -110,7 +115,7 @@ Bug/Enhancement Tracking: GitHub @ https://github.com/splSM/spl2smIntegration/is
 
 # $L.Installation:
 
-- This app should be installed on Search Head nodes.
+- This add-on should be installed on Search Head nodes.
 - Drop this into bad boy into $SPLUNK_HOME/etc/apps or download from it from the GUI, etc.
 - Use the Setup to establish global SM Connection and Credential Parameters, and set the
   Field Captions as exposed in SM's RESTful API.
@@ -121,7 +126,7 @@ Bug/Enhancement Tracking: GitHub @ https://github.com/splSM/spl2smIntegration/is
     Area respectively as Area and Subarea, even though the Incident screen labels them
     as Subcategory and Area. For consistency, it is recommended that the Service Manager
     Administrator re-caption these in the probsummary extaccess record.
-- That's it! The app is installed!
+- That's it! The add-on is installed!
 - Now, when you or your users are creating alerts which will generate SM Incident
   tickets, you can select which values will go into which fields.
   - These can be the same values for all alerts, or separate values - as you please, but in
@@ -129,7 +134,7 @@ Bug/Enhancement Tracking: GitHub @ https://github.com/splSM/spl2smIntegration/is
 
 - Deploy to Distributed Search Head Cluster:
   You'll need to set the SM operator password on each node. Sorry about that, but since this
-  app uses the storage/passwords API to encrypt the SM operator password, it is what it is.
+  add-on uses the storage/passwords API to encrypt the SM operator password, it is what it is.
   You can set every other global parameter in the Setup, and then only have to set the
   password on each node, though.
 
@@ -147,22 +152,20 @@ records) with the same *name* to exist, while still giving every CI a unique ID.
 what you send in for the Affected Service and Affected CI fields, because an Out-of-Box SM is
 going to want those in logical.name format (for example: CI123456) and not in a display.name format
 (for example: hostname.domain.com). Rather than you having to ask every time you want to use a
-different Business Service in your integration (and, moreso, considering that the app will
-automatically send in the hostname found in the raw event!), it would behoove the SM administrators
-to add something like these lines to the expressions on the probsummary extaccess record:
-```
-if (affected.item in $L.file)~#"CI" then (affected.item in $L.file=jscall("SplunkIntegration.getLogicalNameByDisplayName", affected.item in $L.file))
-if (logical.name in $L.file)~#"CI" then (logical.name in $L.file=jscall("SplunkIntegration.getLogicalNameByDisplayName", logical.name in $L.file))
-```
+different CI in your integration, it would behoove the SM administrators to add something like these
+lines to the expressions on the probsummary extaccess record:
+
+if (affected.item in $L.file)~#"CI" then (affected.item in $L.file=jscall("SplunkIntegration.getLogicalNameByDisplayName", affected.item in $L.file));if (logical.name in $L.file)~#"CI" then (logical.name in $L.file=jscall("SplunkIntegration.getLogicalNameByDisplayName", logical.name in $L.file)) 
+
 The SM administrators could then create a ScriptLibrary named SplunkIntegration with this function:
-```
+
 function getLogicalNameByDisplayName(displayName) {
    if ( displayName == null ) { return 'Display Name not provided!'; }
    var device = new SCFile('device');
    if ( device.doSelect('display.name="' + displayName + '"') == RC_SUCCESS ) { return device.logical_name; }
    else { return 'Logical Name not found by Display Name provided!'; }
 }
-```
+
 Also, there is already a DisplayName ScriptLibrary which the SM administrators could use instead.
 
 
@@ -174,4 +177,4 @@ Also, there is already a DisplayName ScriptLibrary which the SM administrators c
 # $L.Troubleshooting:
 
 *** I will add to this section as I indentify common issues you may face in the Service Manager
-    REST API and/or things you may encounter when getting the Splunk side of this app working.
+    REST API and/or things you may encounter when getting the Splunk side of this add-on working.
