@@ -27,7 +27,7 @@
 
 - Build a GUI functionality to select whether the communication with SM should occur over HTTP or HTTPS,
   and develop the backend side to handle the latter
-  - This release uses HTTP, on the assumption that your SM instance is on an internal LAN and the API
+  - This release uses HTTP (not HTTPS), on the assumption that your SM instance is on an internal LAN and the API
     servlet is therefore not requiring SSL, because SM would need to have a cert for every machine that
     wants to use the API over SSL.
 - Build a functionality to allow administrators to re-label the fields in the alert action UI, based on
@@ -154,18 +154,19 @@ going to want those in logical.name format (for example: CI123456) and not in a 
 (for example: hostname.domain.com). Rather than you having to ask every time you want to use a
 different CI in your integration, it would behoove the SM administrators to add something like these
 lines to the expressions on the probsummary extaccess record:
-
-if (affected.item in $L.file)~#"CI" then (affected.item in $L.file=jscall("SplunkIntegration.getLogicalNameByDisplayName", affected.item in $L.file));if (logical.name in $L.file)~#"CI" then (logical.name in $L.file=jscall("SplunkIntegration.getLogicalNameByDisplayName", logical.name in $L.file)) 
-
+```
+if (affected.item in $L.file)~#"CI" then (affected.item in $L.file=jscall("SplunkIntegration.getLogicalNameByDisplayName", affected.item in $L.file))
+if (logical.name in $L.file)~#"CI" then (logical.name in $L.file=jscall("SplunkIntegration.getLogicalNameByDisplayName", logical.name in $L.file)) 
+```
 The SM administrators could then create a ScriptLibrary named SplunkIntegration with this function:
-
+```
 function getLogicalNameByDisplayName(displayName) {
    if ( displayName == null ) { return 'Display Name not provided!'; }
    var device = new SCFile('device');
    if ( device.doSelect('display.name="' + displayName + '"') == RC_SUCCESS ) { return device.logical_name; }
    else { return 'Logical Name not found by Display Name provided!'; }
 }
-
+```
 Also, there is already a DisplayName ScriptLibrary which the SM administrators could use instead.
 
 
