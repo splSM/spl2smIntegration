@@ -1,0 +1,34 @@
+
+2018-08-22T08:14:52.747307 createIncident.py: STDIN was: {"app":"search","owner":"admin","results_file":"/opt/splunk/var/run/splunk/dispatch/rt_scheduler__admin__search__RMD5e5e58f9334360eaf_at_1534939968_1.0/per_result_alert/tmp_0.csv.gz","results_link":"http://spl.lab:8000/app/search/search?q=%7Cloadjob%20rt_scheduler__admin__search__RMD5e5e58f9334360eaf_at_1534939968_1.0%20%7C%20head%201%20%7C%20tail%201&earliest=0&latest=now","search_uri":"/servicesNS/admin/search/saved/searches/SM+Test+2","server_host":"spl.lab","server_uri":"https://127.0.0.1:8089","session_key":"C1N76VlKUhf5Yd^hrQ^dU3yqbvIF7z^xeyPvostc0dYN5sPIXxoWLqnGvoFTunnEWnk80AZdUl2qlaNGLNhWBe9TXuugZCQxRwT5MZT4IuShByDlEME3YpI9WMU80LILeg0","sid":"rt_scheduler__admin__search__RMD5e5e58f9334360eaf_at_1534939968_1.0","search_name":"SM Test 2","configuration":{"area":"security event/message","assignee":"Aaron","assignment":"Service Manager","description":"Splunk found a login event for the ROOT user.","impact":"3","service":"advantage-UnixGroup","source":"3","subcategory":"security","title":"Security Event: ROOT logon found by Splunk","urgency":"2"},"result":{"_confstr":"source::/var/log/secure|host::spl.lab|linux_secure","_eventtype_color":"","_indextime":"1534940092","_kv":"1","_raw":"Aug 22 08:14:52 spl login: ROOT LOGIN ON tty1","_serial":"0","_si":["spl.lab","main"],"_sourcetype":"linux_secure","_time":"1534940092","date_hour":"8","date_mday":"22","date_minute":"14","date_month":"august","date_second":"52","date_wday":"wednesday","date_year":"2018","date_zone":"local","eventtype":"","host":"spl.lab","index":"main","linecount":"","pid":"","process":"login","punct":"__::__:____","source":"/var/log/secure","sourcetype":"linux_secure","splunk_server":"spl.lab","timeendpos":"16","timestartpos":"0"}}
+
+2018-08-22T08:14:54.186522 createIncident.py: POST response from Service Manager was: {
+  "Incident": {
+    "AffectedCI": "CI1001143",
+    "Area": "security",
+    "Assignee": "Aaron",
+    "AssignmentGroup": "Service Manager",
+    "Category": "incident",
+    "Description": [
+      "Splunk found a login event for the ROOT user.",
+      "Raw Event found by Splunk was:",
+      "Aug 22 08:14:52 spl login: ROOT LOGIN ON tty1",
+      "To view the search results which created this Incident, visit this URL:",
+      "http://spl.lab:8000/app/search/search?q=%7Cloadjob%20rt_scheduler__admin__search__RMD5e5e58f9334360eaf_at_1534939968_1.0%20%7C%20head%201%20%7C%20tail%201&earliest=0&latest=now"
+    ],
+    "Impact": "3",
+    "IncidentID": "IM10291",
+    "OpenTime": "2018-08-24T22:57:49+00:00",
+    "OpenedBy": "odin",
+    "Phase": "Categorization",
+    "Service": "CI1001024",
+    "Source": "3",
+    "Status": "Categorize",
+    "Subarea": "security event/message",
+    "Title": "Security Event: ROOT logon found by Splunk",
+    "UpdatedBy": "odin",
+    "UpdatedTime": "2018-08-24T22:57:49+00:00",
+    "Urgency": "2"
+  },
+  "Messages": ["Incident \"IM10291\" added."],
+  "ReturnCode": 0
+}
