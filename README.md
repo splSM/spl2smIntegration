@@ -52,9 +52,8 @@ What, Why, How, etc.:     This add-on allows a Splunk administrator to create sa
                           enterprise-grade ticketing solution often used for (among other things), IT Service
                           Management and cybersecurity Incident Resolution.
 
-Compatible Products:      Intended for use with Splunk Enterprise, Cloud, or Light. To this point, I have
-                          only worked with on-prem Splunk, but Cloud and Light should both run this add-on
-                          as well. Intended to be used in concert with HP/HPE/MicroFocus Service Manager.
+Compatible Products:      Intended for use with Splunk Enterprise, Cloud, or Light, and inconcert with an
+                          instance of HP/HPE/MicroFocus Service Manager.
 
 Supported Platforms:      This add-on is platform-independent.
 
